@@ -8,5 +8,7 @@ namespace MT.OnlineRestaurant.BusinessEntities
     {
         public int? MenuId { get; set; }
         public decimal Price { get; set; }
+        public int quantity { get; set; }
+        public bool offer { get; set; }
     }
 }

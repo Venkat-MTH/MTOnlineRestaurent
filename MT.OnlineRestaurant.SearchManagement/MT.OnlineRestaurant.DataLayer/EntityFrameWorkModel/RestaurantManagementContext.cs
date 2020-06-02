@@ -119,6 +119,8 @@ namespace MT.OnlineRestaurant.DataLayer.EntityFrameWorkModel
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.price).HasColumnName("Price");
+
                 entity.Property(e => e.Item)
                     .IsRequired()
                     .HasMaxLength(225)

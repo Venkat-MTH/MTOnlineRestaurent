@@ -20,13 +20,18 @@ namespace MT.OnlineRestaurant.OrderAPI.ModelValidators
 
             RuleFor(m => m)
                 .NotEmpty()
-                .NotNull()
-                .Must(r => BeAValidRestaurant(r, UserId, UserToken)).When(p => p.RestaurantId != 0).WithMessage("Invalid Restaurant");
+                .NotNull();
+                //.Must(r => BeAValidRestaurant(r, UserId, UserToken)).When(p => p.RestaurantId != 0).WithMessage("Invalid Restaurant");
 
             RuleFor(m => m)
                 .NotEmpty()
-                .NotNull();
-                //.Must(r => BeAValidItemOrder(r, UserId, UserToken)).When(p => p.RestaurantId != 0).WithMessage("Invalid order");
+                .NotNull()
+                .Must(r => BeAValidItemOrder(r, UserId, UserToken)).When(p => p.RestaurantId != 0).WithMessage("Invalid order");
+
+            RuleFor(m => m)
+               .NotEmpty()
+               .NotNull()
+               .Must(r => BeAValidOffer(r, UserId, UserToken)).When(p => p.RestaurantId != 0).WithMessage("Offer Exipred");
 
             RuleFor(m => m.CustomerId)
                 .NotEmpty()
@@ -57,6 +62,18 @@ namespace MT.OnlineRestaurant.OrderAPI.ModelValidators
         {
             bool IsValidRestaurant = _placeOrderActions.IsValidRestaurantAsync(orderEntity, UserId, UserToken).GetAwaiter().GetResult();
             return IsValidRestaurant;
+        }
+        /// <summary>
+        /// Make a service call to fetch offers
+        /// </summary>
+        /// <param name="orderEntity">OrderEntity</param>
+        /// <param name="UserId">UserId</param>
+        /// <param name="UserToken">UserToken</param>
+        /// <returns>Boolean whether offer is valid or invalid</returns>
+        public bool BeAValidOffer(OrderEntity orderEntity, int UserId, string UserToken)
+        {
+            bool IsValidOffer = _placeOrderActions.IsValidOfferAsync(orderEntity, UserId, UserToken).GetAwaiter().GetResult();
+            return IsValidOffer;
         }
         /// <summary>
         /// Make a service call to check for Item availability

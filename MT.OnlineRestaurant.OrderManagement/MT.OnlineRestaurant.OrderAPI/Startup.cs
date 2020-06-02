@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MT.Online.Restaurant.MessagesManagement.Services;
 using MT.OnlineRestaurant.BusinessLayer;
 using MT.OnlineRestaurant.BusinessLayer.interfaces;
 using MT.OnlineRestaurant.DataLayer;
@@ -62,8 +63,13 @@ namespace MT.OnlineRestaurant.OrderAPI
             services.AddTransient<IPaymentDbAccess, PaymentDbAccess>();
             services.AddTransient<IBookYourTableBusiness, BookYourTableBusiness>();
             services.AddTransient<IBookYourTableRepository, BookYourTableRepository>();
+            services.AddTransient<ICartActions, CartActions>();
+            services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<ILogService, LoggerService>();
+            services.AddTransient<IConsumePriceChange, ConsumePriceChange>();
+            services.AddTransient<IConsumeOutOfStock, ConsumeOutOfStock>();
             // Auto Mapper Configurations
+
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
@@ -78,11 +84,19 @@ namespace MT.OnlineRestaurant.OrderAPI
                 c.OperationFilter<HeaderFilter>();
             });
 
+
+            services.AddApplicationInsightsTelemetry();
+
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddDbContext<OrderManagementContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnectionString"),
                b => b.MigrationsAssembly("MT.OnlineRestaurant.DataLayer")));
+
+            var messages = services.BuildServiceProvider().GetService<IConsumePriceChange>();
+            messages.RegisterOnMessageHandlerAndReceiveMessages();
+            var outofstock = services.BuildServiceProvider().GetService<IConsumeOutOfStock>();
+            outofstock.RegisterOnMessageHandlerAndReceiveMessages();
 
             services.AddMvc()
                     .AddMvcOptions(options =>
@@ -98,7 +112,7 @@ namespace MT.OnlineRestaurant.OrderAPI
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConsumePriceChange mess)
         {
             if (env.IsDevelopment())
             {
@@ -112,6 +126,7 @@ namespace MT.OnlineRestaurant.OrderAPI
             });
             
             app.UseMvc();
+           // mess.RegisterOnMessageHandlerAndReceiveMessages();
         }
     }
 }

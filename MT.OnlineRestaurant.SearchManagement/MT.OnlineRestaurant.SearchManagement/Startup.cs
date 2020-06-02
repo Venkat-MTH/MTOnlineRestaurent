@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LoggingManagement;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MT.Online.Restaurant.MessagesManagement.Services;
 using MT.OnlineRestaurant.BusinessLayer;
+using MT.OnlineRestaurant.BusinessLayer.Repository;
 using MT.OnlineRestaurant.DataLayer.EntityFrameWorkModel;
 using MT.OnlineRestaurant.DataLayer.Repository;
 using MT.OnlineRestaurant.Logging;
@@ -49,6 +52,12 @@ namespace MT.OnlineRestaurant.SearchManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IRestaurantBusiness, RestaurantBusiness>();
+            services.AddTransient<ISearchRepository, SearchRepository>();
+            services.AddTransient<IMenuPriceRepository, MenuPriceRepository>();
+            services.AddTransient<IMenuPriceBusiness, MenuPriceBusiness>();
+            services.AddTransient<IOrderedPlaced, OrderedPlaced>();
+            services.AddTransient<ILogService, LoggerService>();
             // services.AddMvc();
             services.AddSwaggerGen(c =>
             {
@@ -57,10 +66,13 @@ namespace MT.OnlineRestaurant.SearchManagement
             });
 
             //services.Configure<ConnectionString>(Configuration.GetSection("ConnectionString"));
-
+            services.AddApplicationInsightsTelemetry();
             services.AddDbContext<RestaurantManagementContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnectionString"),
                b => b.MigrationsAssembly("MT.OnlineRestaurant.DataLayer")));
+
+            var messages = services.BuildServiceProvider().GetService<IOrderedPlaced>();
+            messages.RegisterOnMessageHandlerAndReceiveMessages();
 
             services.AddMvc()
                     .AddMvcOptions(options =>
@@ -73,12 +85,13 @@ namespace MT.OnlineRestaurant.SearchManagement
 
                     });
 
-            services.AddTransient<IRestaurantBusiness, RestaurantBusiness>();
-            services.AddTransient<ISearchRepository, SearchRepository>();
+            
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,IOrderedPlaced message)
         {
             if (env.IsDevelopment())
             {

@@ -10,6 +10,7 @@ namespace MT.OnlineRestaurant.BusinessEntities
         public string dish_Name { get; set; }
         public decimal price { get; set; }
         public int running_Offer { get; set; }
+        public bool offer { get; set; }
         public string cuisine { get; set; }
         public int quantity { get; set; }
     }

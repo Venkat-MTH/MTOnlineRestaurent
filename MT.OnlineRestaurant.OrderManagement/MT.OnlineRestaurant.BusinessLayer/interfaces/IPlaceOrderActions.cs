@@ -18,8 +18,9 @@ namespace MT.OnlineRestaurant.BusinessLayer.interfaces
         /// <param name="customerId"></param>
         /// <returns></returns>
         IQueryable<CustomerOrderReport> GetReports(int customerId);
-
+         OrderEntity mappingorderandcartitems(int userid);
         Task<bool> IsValidRestaurantAsync(OrderEntity orderEntity, int UserId, string UserToken);
+        Task<bool> IsValidOfferAsync(OrderEntity orderEntity, int UserId, string UserToken);
         Task<bool> IsOrderItemInStock(OrderEntity orderEntity, int UserId, string UserToken);
 
     }

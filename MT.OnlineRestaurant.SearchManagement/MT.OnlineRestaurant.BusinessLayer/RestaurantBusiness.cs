@@ -6,6 +6,8 @@ using MT.OnlineRestaurant.DataLayer.EntityFrameWorkModel;
 using MT.OnlineRestaurant.DataLayer.DataEntity;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json;
+using MessagesManagement;
 
 namespace MT.OnlineRestaurant.BusinessLayer
 {
@@ -204,7 +206,57 @@ namespace MT.OnlineRestaurant.BusinessLayer
 
         public IQueryable<RestaurantInformation> SearchForRestaurant(SearchForRestaurant searchDetails)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<RestaurantInformation> restaurant_Info = new List<RestaurantInformation>();
+                IQueryable<RestaurantSearchDetails> searched_Restaurant;
+                DataLayer.DataEntity.AddtitionalFeatureForSearch additionalsearch = new DataLayer.DataEntity.AddtitionalFeatureForSearch
+                {
+                    cuisine = (string.IsNullOrEmpty(searchDetails.search.cuisine) ? "" : searchDetails.search.cuisine),
+                    Menu = (string.IsNullOrEmpty(searchDetails.search.Menu) ? "" : searchDetails.search.Menu),
+                    rating = (searchDetails.search.rating != null && searchDetails.search.rating > 0) ? searchDetails.search.rating : 0
+                };
+
+                DataLayer.DataEntity.LocationDetails locationsearch = new DataLayer.DataEntity.LocationDetails
+                {
+                    distance = searchDetails.location.distance,
+                    restaurant_Name = (string.IsNullOrEmpty(searchDetails.location.restaurant_Name) ? "" : searchDetails.location.restaurant_Name),
+                    xaxis = searchDetails.location.xaxis,
+                    yaxis = searchDetails.location.yaxis
+                };
+
+                DataLayer.DataEntity.SearchForRestautrant searchCritera = new DataLayer.DataEntity.SearchForRestautrant
+                {
+                    search = additionalsearch,
+                    location = locationsearch
+                };
+
+                searched_Restaurant = search_Repository.SearchForRestaurant(searchCritera);
+                if (searched_Restaurant != null)
+                {
+                    foreach (var restaurants in searched_Restaurant)
+                    {
+                        RestaurantInformation restaurant_Details = new RestaurantInformation
+                        {
+                            restaurant_ID = restaurants.restauran_ID,
+                            restaurant_Name = restaurants.restaurant_Name,
+                            restaurant_Address = restaurants.restaurant_Address,
+                            restaurant_ContactNo = restaurants.restaurant_PhoneNumber,
+                            closing_Time = restaurants.closing_Time,
+                            opening_Time = restaurants.opening_Time,
+                            website = restaurants.restraurant_Website,
+                            xaxis = restaurants.xaxis,
+                            yaxis = restaurants.yaxis
+                        };
+                        restaurant_Info.Add(restaurant_Details);
+                    }
+                }
+                return restaurant_Info.AsQueryable();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -232,6 +284,54 @@ namespace MT.OnlineRestaurant.BusinessLayer
             TblMenu menu = search_Repository.ItemInStock(restaurantID,menuID);
             menuObj.quantity = menu.quantity;           
              return 0;
+        }
+        public int ItemInStock(int menuID)
+        {
+            RestaurantMenu menuObj = new RestaurantMenu();
+            TblMenu menu = search_Repository.ItemInStock(menuID);
+            menuObj.quantity = menu.quantity;
+            menuObj.price = menu.price;
+            return menuObj.quantity;
+        }
+
+        public bool Validateoffer(int menuID,bool offer)
+        {
+            bool res = search_Repository.ValidateOffer(menuID,offer);
+            return res;
+        }
+
+        public void UpdateItemsinstock(string msg)
+        {
+            List<OrderMenus> orders = new List<OrderMenus>();
+            List<OrderMenus> msgs = JsonConvert.DeserializeObject<List<OrderMenus>>(msg);
+            foreach(var item in msgs)
+            {
+                int updatedquantity = search_Repository.Updateitemstock(item.quantity, item.MenuId);
+                if (updatedquantity <= 0)
+                {
+                    orders.Add(item);
+                }
+                if (orders.Count >= 1)
+                {
+                    var items = JsonConvert.SerializeObject(orders);
+                    SendMessage.SendMessagesAsync(items);
+                    orders.Clear();
+                }
+            }
+        }
+
+        public IQueryable<MenuList> GetMenuList()
+        {
+            List<MenuList> mlist =  new List<MenuList>();
+            IQueryable<TblMenu> tblmenu = search_Repository.MenuDetails();
+            foreach(var item in tblmenu)
+            {
+                MenuList m = new MenuList();
+                m.Id = item.Id;
+                m.Item = item.Item;
+                mlist.Add(m);
+            }
+            return mlist.AsQueryable();
         }
     }
 }

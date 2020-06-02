@@ -15,6 +15,7 @@ namespace MT.OnlineRestaurant.DataLayer.Context
         public int? TblRestaurantId { get; set; }
         public int? TblOrderStatusId { get; set; }
         public int? TblPaymentTypeId { get; set; }
+        public int quantity { get; set; }
         public decimal TotalPrice { get; set; }
         public string DeliveryAddress { get; set; }
         public int Id { get; set; }

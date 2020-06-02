@@ -29,6 +29,7 @@
   <ItemGroup>
     <Reference Include="MT.OnlineRestaurant.Logging">
       <HintPath>..\MT.OnlineRestaurant.Logging\bin\Debug\netcoreapp2.0\MT.OnlineRestaurant.Logging.dll</HintPath>
+      <Private>true</Private>
     </Reference>
   </ItemGroup>
 

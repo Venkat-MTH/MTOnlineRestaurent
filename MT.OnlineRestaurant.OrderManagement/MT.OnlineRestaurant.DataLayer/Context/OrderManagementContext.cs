@@ -32,6 +32,7 @@ namespace MT.OnlineRestaurant.DataLayer.Context
         public virtual DbSet<TblPaymentType> TblPaymentType { get; set; }
         public virtual DbSet<TblTableOrder> TblTableOrder { get; set; }
         public virtual DbSet<TblTableOrderMapping> TblTableOrderMapping { get; set; }
+        public virtual DbSet<TblCart> TblCart { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -97,6 +98,10 @@ namespace MT.OnlineRestaurant.DataLayer.Context
                 entity.Property(e => e.TblRestaurantId)
                     .HasColumnName("tblRestaurantID")
                     .HasDefaultValueSql("((0))");
+                
+                entity.Property(e => e.quantity)
+                            .HasColumnName("quantity")
+                            .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
 
@@ -134,6 +139,11 @@ namespace MT.OnlineRestaurant.DataLayer.Context
                 entity.Property(e => e.TblMenuId)
                     .HasColumnName("tblMenuID")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.quantity)
+                           .HasColumnName("quantity")
+                           .HasDefaultValueSql("((0))");
+
 
                 entity.HasOne(d => d.TblFoodOrder)
                     .WithMany(p => p.TblFoodOrderMapping)
@@ -330,6 +340,41 @@ namespace MT.OnlineRestaurant.DataLayer.Context
                     .HasForeignKey(d => d.TblTableOrderId)
                     .HasConstraintName("FK_tblTableOrderMapping_tblTableOrderID");
             });
+
+            modelBuilder.Entity<TblCart>(entity =>
+            {
+                entity.ToTable("tblCart");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.TblCustomerID).HasColumnName("tblCustomerID");
+
+                entity.Property(e => e.TblRestaurantID).HasColumnName("tblRestaurantID");
+
+                entity.Property(e => e.TblMenuID).HasColumnName("tblMenuID");
+
+                entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.offer).HasColumnType("bit");
+
+                entity.Property(e => e.status).HasColumnType("bit");
+
+                entity.Property(e => e.Itemavailabilitystatus).HasColumnName("Itemavailabilitystatus");
+
+                entity.Property(e => e.RecordTimeStampCreated)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RecordTimeStamp)
+                   .HasColumnType("datetime")
+                   .HasDefaultValueSql("((0))");
+
+
+
+            });
+
         }
     }
 }

@@ -49,6 +49,56 @@ namespace MT.OnlineRestaurant.DataLayer.Migrations
                     b.ToTable("LoggingInfo");
                 });
 
+            modelBuilder.Entity("MT.OnlineRestaurant.DataLayer.Context.TblCart", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Itemavailabilitystatus")
+                        .HasColumnName("Itemavailabilitystatus");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnName("quantity");
+
+                    b.Property<DateTime>("RecordTimeStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("((0))");
+
+                    b.Property<DateTime>("RecordTimeStampCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("((0))");
+
+                    b.Property<int?>("TblCustomerID")
+                        .HasColumnName("tblCustomerID");
+
+                    b.Property<int?>("TblMenuID")
+                        .HasColumnName("tblMenuID");
+
+                    b.Property<int?>("TblRestaurantID")
+                        .HasColumnName("tblRestaurantID");
+
+                    b.Property<int>("UserCreated");
+
+                    b.Property<int>("UserModified");
+
+                    b.Property<bool>("offer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblCart");
+                });
+
             modelBuilder.Entity("MT.OnlineRestaurant.DataLayer.Context.TblFoodOrder", b =>
                 {
                     b.Property<int>("Id")
@@ -98,6 +148,11 @@ namespace MT.OnlineRestaurant.DataLayer.Migrations
 
                     b.Property<int>("UserModified");
 
+                    b.Property<int>("quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("quantity")
+                        .HasDefaultValueSql("((0))");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TblOrderStatusId");
@@ -142,6 +197,11 @@ namespace MT.OnlineRestaurant.DataLayer.Migrations
                     b.Property<int>("UserCreated");
 
                     b.Property<int>("UserModified");
+
+                    b.Property<int>("quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("quantity")
+                        .HasDefaultValueSql("((0))");
 
                     b.HasKey("Id");
 

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using static Microsoft.Azure.Amqp.Serialization.SerializableType;
 
 namespace MT.OnlineRestaurant.BusinessLayer
 {
@@ -21,7 +22,7 @@ namespace MT.OnlineRestaurant.BusinessLayer
         private readonly IMapper _mapper;
         private readonly IPlaceOrderDbAccess _placeOrderDbAccess;
         private readonly IOptions<ConnectionStrings> _connectionStrings;
-
+        private readonly ICartActions _cartActions;
         public PlaceOrderActions()
         {
             
@@ -37,6 +38,13 @@ namespace MT.OnlineRestaurant.BusinessLayer
             _placeOrderDbAccess = placeOrderDbAccess;
             _mapper = mapper;
             _connectionStrings = connectionStrings;
+        }
+        public PlaceOrderActions(IPlaceOrderDbAccess placeOrderDbAccess, IMapper mapper, IOptions<ConnectionStrings> connectionStrings,ICartActions cartactions)
+        {
+            _placeOrderDbAccess = placeOrderDbAccess;
+            _mapper = mapper;
+            _connectionStrings = connectionStrings;
+            _cartActions = cartactions;
         }
 
         /// <summary>
@@ -57,6 +65,7 @@ namespace MT.OnlineRestaurant.BusinessLayer
                     TblFoodOrderId = 0,
                     TblMenuId = orderMenu.MenuId,
                     Price = orderMenu.Price,
+                    quantity= orderMenu.quantity,
                     UserCreated = 0,
                     RecordTimeStampCreated = DateTime.Now
                 });
@@ -117,18 +126,75 @@ namespace MT.OnlineRestaurant.BusinessLayer
         }
         public async Task<bool> IsOrderItemInStock(OrderEntity orderEntity, int UserId, string UserToken)
         {
-            //using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl))
-            using(HttpClient httpClient = new HttpClient())
+            
+            bool flag = true;
+            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl = "https://mtonlinerestaurantsearchmanagement.azurewebsites.net/api/OrderDetails?orderedmenuitems="))
+            //using (HttpClient httpClient = new HttpClient())
             {
-                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync("http://localhost:10601/api/OrderDetail?RestaurantID=" + orderEntity.RestaurantId);
+                var ordermenudetails = JsonConvert.SerializeObject(orderEntity.OrderMenuDetails);
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(_connectionStrings.Value.RestaurantApiUrl+ ordermenudetails);
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
                     string json = await httpResponseMessage.Content.ReadAsStringAsync();
-                    RestaurantInformation restaurantInformation = JsonConvert.DeserializeObject<RestaurantInformation>(json);
-                    if (restaurantInformation != null)
+                    List <OrderedMeniItems> ordereditems = JsonConvert.DeserializeObject<List<OrderedMeniItems>>(json);
+                    if (ordereditems != null)
+                    {
+                        foreach(var item in ordereditems)
+                        {
+                            if (item.quantity == 0)
+                            {
+                                flag = false;
+
+                                CartItemsEntity cart = new CartItemsEntity()
+                                {
+                                    Status = false,
+                                    TblMenuID = item.menu_ID,
+                                    Price = item.price,
+                                    Itemavailabilitystatus = "OutofStock",
+                                    TblRestaurantID = orderEntity.RestaurantId
+                                };
+
+                                 _cartActions.UpdateCartitemstatus(cart);
+                            }
+                            else if ( item.quantity == -1)
+                            {
+                                flag = false;
+
+                                CartItemsEntity cart = new CartItemsEntity()
+                                {
+                                    Status = false,
+                                    TblMenuID = item.menu_ID,
+                                    Price = item.price,
+                                    Itemavailabilitystatus = "Requested Quantity Not Available",
+                                    TblRestaurantID = orderEntity.RestaurantId
+                                };
+
+                                 _cartActions.UpdateCartitemstatus(cart);
+                            }
+                        }
+                        return flag;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> IsValidOfferAsync(OrderEntity orderEntity, int UserId, string UserToken)
+        {
+            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl= "https://mtonlinerestaurantsearchmanagement.azurewebsites.net/api/OfferForMenu?orderedmenuitems="))
+            //using (HttpClient httpClient = new HttpClient())
+            {
+                var val = JsonConvert.SerializeObject(orderEntity.OrderMenuDetails);
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(_connectionStrings.Value.RestaurantApiUrl + val);
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    string json = await httpResponseMessage.Content.ReadAsStringAsync();
+                    List<OrderedMeniItems> ordereditems = JsonConvert.DeserializeObject<List<OrderedMeniItems>>(json);
+                    if (ordereditems != null)
                     {
                         return true;
                     }
+
                 }
             }
             return false;
@@ -151,5 +217,38 @@ namespace MT.OnlineRestaurant.BusinessLayer
         //    }
         //    return false;
         //}
+
+        public OrderEntity mappingorderandcartitems(int userid)
+        {
+            OrderEntity orderEntity = new OrderEntity();
+            List<OrderMenus> om1 = new List<OrderMenus>();
+            List<CartItemsEntity> cartitems = new List<CartItemsEntity>();
+            cartitems = _cartActions.GetCartDetails(userid);
+            if (cartitems == null)
+            {
+                return null;
+            }
+            foreach (var item in cartitems)
+            {
+                orderEntity.CustomerId = (int)item.TblCustomerID;
+                orderEntity.RestaurantId = (int)item.TblRestaurantID;
+                orderEntity.DeliveryAddress = "abc";
+                OrderMenus om = new OrderMenus();
+                om.MenuId = item.TblMenuID;
+                om.Price = item.Price;
+                om.offer = item.offer;
+                om.quantity = (int)item.Quantity;
+                om1.Add(om);
+            }
+            orderEntity.OrderMenuDetails = new List<OrderMenus>(om1);
+            return orderEntity;
+        }
+    }
+
+    public class OrderedMeniItems
+    {
+        public int menu_ID { get; set; }
+        public decimal price { get; set; }
+        public int quantity { get; set; }
     }
 }

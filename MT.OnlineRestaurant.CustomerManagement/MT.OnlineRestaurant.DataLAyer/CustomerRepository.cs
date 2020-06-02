@@ -14,7 +14,7 @@ namespace MT.OnlineRestaurant.DataLayer
         {
             _connectionStrings = dbSettings;
             //_context = new CustomerManagementContext(_connectionStrings.Value.DB);
-            _context = new CustomerManagementContext("Server=tcp:devserver4.database.windows.net;Initial Catalog=CustomerManagement;User ID=M1043027;Password=Azuredb1@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            _context = new CustomerManagementContext("Server=tcp:restaurent.database.windows.net;Initial Catalog=CustomerManagement;Persist Security Info=False;User ID=M1054315;Password=Venky@1991;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
         public int UserRegisteration(TblCustomer user,byte[] passwordSalt)
         {

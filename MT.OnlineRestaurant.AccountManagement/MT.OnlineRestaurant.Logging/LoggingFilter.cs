@@ -30,10 +30,10 @@ namespace MT.OnlineRestaurant.Logging
         #region ActionExecuted
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            try
-            {
-                var controllerName = ((ControllerBase)context.Controller).ControllerContext.ActionDescriptor.ControllerName;
-                var actionName = ((ControllerBase)context.Controller).ControllerContext.ActionDescriptor.ActionName;
+            //try
+            //{
+                var controllerName = ((ControllerBase)context?.Controller)?.ControllerContext?.ActionDescriptor?.ControllerName;
+                var actionName = ((ControllerBase)context?.Controller)?.ControllerContext?.ActionDescriptor?.ActionName;
 
                 LoggingInfo info = new LoggingInfo()
                 {
@@ -54,11 +54,11 @@ namespace MT.OnlineRestaurant.Logging
 
 
                 //code to insert into the log table
-            }
-            catch
-            {
-                throw new NotImplementedException();
-            }
+            //}
+            //catch
+            //{
+            //    throw new NotImplementedException();
+            //}
         }
 
         #endregion
@@ -66,10 +66,10 @@ namespace MT.OnlineRestaurant.Logging
         #region ActionExecuting
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            try
-            {
-                var controllerName = ((ControllerBase)context.Controller).ControllerContext.ActionDescriptor.ControllerName;
-                var actionName = ((ControllerBase)context.Controller).ControllerContext.ActionDescriptor.ActionName;
+            //try
+            //{
+                var controllerName = ((ControllerBase)context?.Controller)?.ControllerContext?.ActionDescriptor?.ControllerName;
+                var actionName = ((ControllerBase)context?.Controller)?.ControllerContext?.ActionDescriptor?.ActionName;
                 var controller = context.Controller as Controller;
                 LoggingInfo info = new LoggingInfo()
                 {
@@ -80,11 +80,11 @@ namespace MT.OnlineRestaurant.Logging
                 };
 
                 this._logging.CaptureLogs(info);
-            }
-            catch
-            {
-                throw new NotImplementedException();
-            }
+            //}
+            //catch
+            //{
+            //    throw new NotImplementedException();
+            //}
         }
         #endregion
 

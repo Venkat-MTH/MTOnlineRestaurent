@@ -71,14 +71,14 @@ namespace MT.OnlineRestaurant.CustomerManagement
                 c.OperationFilter<HeaderFilter>();
             });
             services.AddDbContext<CustomerManagementContext>(options =>
-               options.UseSqlServer("Server=tcp:devserver4.database.windows.net;Initial Catalog=CustomerManagement;User ID=M1043027;Password=Azuredb1@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+               options.UseSqlServer("Server=tcp:restaurent.database.windows.net;Initial Catalog=CustomerManagement;Persist Security Info=False;User ID=M1054315;Password=Venky@1991;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
                b => b.MigrationsAssembly("MT.OnlineRestaurant.DataLayer")));
             services.AddMvc()
                     .AddMvcOptions(options =>
                     {
                         options.Filters.Add(new Authorization());
-                        //options.Filters.Add(new LoggingFilter(Configuration["ApplicationString:DB"]));
-                        //options.Filters.Add(new ErrorHandlingFilter(Configuration["ApplicationString:DB"]));
+                        options.Filters.Add(new LoggingFilter(Configuration["ApplicationString:DB"]));
+                        options.Filters.Add(new ErrorHandlingFilter(Configuration["ApplicationString:DB"]));
                         options.MaxModelValidationErrors = 50;
                         options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
                             (_) => "The field is required.");

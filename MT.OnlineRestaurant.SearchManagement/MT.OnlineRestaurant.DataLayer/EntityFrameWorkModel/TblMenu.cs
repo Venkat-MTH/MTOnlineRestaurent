@@ -12,6 +12,7 @@ namespace MT.OnlineRestaurant.DataLayer.EntityFrameWorkModel
 
         public string Item { get; set; }
         public int TblCuisineId { get; set; }
+        public int price { get; set; }
         public int Id { get; set; }
         public int UserCreated { get; set; }
         public int UserModified { get; set; }

@@ -23,6 +23,9 @@ namespace MT.OnlineRestaurant.DataLayer.Repository
         /// <param name="tblRating"></param>
         void RestaurantRating(TblRating tblRating);
         TblMenu ItemInStock(int restaurantID,int MenuID);
-
+        TblMenu ItemInStock(int MenuID);
+        int Updateitemstock(int quantity, int menuid);
+         bool ValidateOffer(int menuid,bool offer);
+        IQueryable<TblMenu> MenuDetails();
     }
 }

@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LoggingManagement\LoggingManagement.csproj" />
+    <ProjectReference Include="..\MessagesManagement\MT.Online.Restaurant.MessagesManagement.Publish.csproj" />
+    <ProjectReference Include="..\MT.Online.Restaurant.MessagesManagement\MT.Online.Restaurant.MessagesManagement.Consume.csproj" />
     <ProjectReference Include="..\MT.OnlineRestaurant.BusinessEntities\MT.OnlineRestaurant.BusinessEntities.csproj" />
     <ProjectReference Include="..\MT.OnlineRestaurant.BusinessLayer\MT.OnlineRestaurant.BusinessLayer.csproj" />
   </ItemGroup>

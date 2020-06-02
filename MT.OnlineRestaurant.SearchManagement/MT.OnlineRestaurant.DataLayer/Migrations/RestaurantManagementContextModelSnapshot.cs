@@ -167,6 +167,9 @@ namespace MT.OnlineRestaurant.DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("((0))");
 
+                    b.Property<int>("price")
+                        .HasColumnName("Price");
+
                     b.Property<int>("quantity")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Quantity")

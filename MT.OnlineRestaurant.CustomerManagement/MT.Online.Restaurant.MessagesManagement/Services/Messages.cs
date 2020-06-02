@@ -10,7 +10,7 @@ namespace MT.Online.Restaurant.MessagesManagement.Services
     public class Messages : IMessages
     {
         public ICustomerBusiness _customerBusiness { get; set; }
-        const string ServiceBusConnectionString = "Endpoint=sb://capstoneapi.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=CLJQF4McnQ8UVBixOM+pTvK/Uo9ybJGESjQQMGnWscA=";
+        const string ServiceBusConnectionString = "Endpoint=sb://capstonesb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=H6qStKOKlEXrvTUO9Mk8CD7Sd2WBx2i6rAWAfEb8tSI=";
         const string TopicName = "itemoutofstock";
         const string SubscriptionName = "s1";
         static ISubscriptionClient subscriptionClient;

@@ -6,9 +6,17 @@ namespace MT.OnlineRestaurant.BusinessEntities
 {
     public class CartItemsEntity
     {
-        // Number of items in the cart
-        public int CartItems { get; set; }
+       // public int? CartId { get; set; }
+        public int? TblCustomerID { get; set; }
+        public int? TblRestaurantID { get; set; }
+        public int? TblMenuID { get; set; }
+        public decimal Price { get; set; }
+        public int? Quantity { get; set; }
         // Item availability
-        public bool IsItemAvailable { get; set; }
+        public bool Status { get; set; }
+        public string Itemavailabilitystatus { get; set; }
+        public bool offer { get; set; }
+        public DateTime RecordTimeStamp { get; set; }
+        public DateTime RecordTimeStampCreated { get; set; }
     }
 }

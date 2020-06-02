@@ -15,12 +15,17 @@ namespace MT.OnlineRestaurant.BusinessLayer
         IQueryable<RestaurantInformation> SearchRestaurantByLocation(LocationDetails locationDetails);
         IQueryable<RestaurantInformation> GetRestaurantsBasedOnMenu(AdditionalFeatureForSearch additionalFeatureForSearch);
         IQueryable<RestaurantInformation> SearchForRestaurant(SearchForRestaurant searchDetails);
+        IQueryable<MenuList> GetMenuList();
+
         /// <summary>
         /// Recording the customer rating the restaurants
         /// </summary>
         /// <param name=""></param>
         void RestaurantRating(RestaurantRating restaurantRating);
         int ItemInStock(int restaurantID,int menuID);
+        int ItemInStock(int menuID);
+        bool Validateoffer(int menuID,bool offer);
+        void UpdateItemsinstock(string msg);
 
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MT.OnlineRestaurant.OrderAPI", "MT.OnlineRestaurant.OrderAPI\MT.OnlineRestaurant.OrderAPI.csproj", "{322FC967-464C-4D4E-8E65-A5161293D545}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MT.OnlineRestaurant.UT", "MT.OnlineRestaurant.UT\MT.OnlineRestaurant.UT.csproj", "{399A29A7-986F-4EF5-AFAE-CB5FE51A09B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggingManagement", "LoggingManagement\LoggingManagement.csproj", "{6E0C3B1C-59BF-48F5-9FB2-2E737640EAE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MT.Online.Restaurant.MessagesManagement.Consume", "MT.Online.Restaurant.MessagesManagement\MT.Online.Restaurant.MessagesManagement.Consume.csproj", "{A8076CC2-35E9-481C-BDF1-8EF44CC72AA3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MT.Online.Restaurant.MessagesManagement.Publish", "MessagesManagement\MT.Online.Restaurant.MessagesManagement.Publish.csproj", "{20FC2856-2D02-4DC0-BAA8-A5191FD71466}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{6E0C3B1C-59BF-48F5-9FB2-2E737640EAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E0C3B1C-59BF-48F5-9FB2-2E737640EAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E0C3B1C-59BF-48F5-9FB2-2E737640EAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8076CC2-35E9-481C-BDF1-8EF44CC72AA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8076CC2-35E9-481C-BDF1-8EF44CC72AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8076CC2-35E9-481C-BDF1-8EF44CC72AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8076CC2-35E9-481C-BDF1-8EF44CC72AA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FC2856-2D02-4DC0-BAA8-A5191FD71466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FC2856-2D02-4DC0-BAA8-A5191FD71466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FC2856-2D02-4DC0-BAA8-A5191FD71466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FC2856-2D02-4DC0-BAA8-A5191FD71466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

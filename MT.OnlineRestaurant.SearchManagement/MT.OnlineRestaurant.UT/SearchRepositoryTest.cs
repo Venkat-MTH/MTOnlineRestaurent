@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LoggingManagement;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MT.OnlineRestaurant.BusinessEntities;
 using MT.OnlineRestaurant.BusinessLayer;
@@ -74,10 +75,11 @@ namespace MT.OnlineRestaurant.UT
                 user_Comments = "",
             });
             var mockOrder = new Mock<IRestaurantBusiness>();
+            var mockOrder1 = new Mock<ILogService>();
             mockOrder.Setup(x => x.GetRestaurantRating(1)).Returns(restaurantRatings.AsQueryable());
 
             //Act
-            var searchController = new SearchController(mockOrder.Object);
+            var searchController = new SearchController(mockOrder.Object,mockOrder1.Object);
             var data = searchController.GetResturantRating(1);
             var okObjectResult = data as OkObjectResult;
 
