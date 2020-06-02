@@ -7,11 +7,11 @@ using MT.OnlineRestaurant.BusinessLayer.Interfaces;
 using MT.OnlineRestaurant.DataLayer;
 using MT.OnlineRestaurant.DataLayer.Context;
 using MT.OnlineRestaurant.DataLayer.Interfaces;
-using MT.OnlineRestaurant.Logging;
 using MT.OnlineRestaurant.ValidateUserHandler;
 using MT.OnlineRestuarant.DataLayer;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
+using MT.OnlineRestaurant.Logging;
 
 namespace MT.OnlineRestaurant.AccountManagement
 {

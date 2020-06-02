@@ -23,13 +23,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MT.OnlineRestaurant.BusinessLayer\MT.OnlineRestaurant.BusinessLayer.csproj" />
     <ProjectReference Include="..\MT.OnlineRestaurant.Helper\MT.OnlineRestaurant.Helper.csproj" />
+    <ProjectReference Include="..\MT.OnlineRestaurant.Logging\MT.OnlineRestaurant.Logging.csproj" />
     <ProjectReference Include="..\MT.OnlineRestaurant.ValidateUserHandler\MT.OnlineRestaurant.ValidateUserHandler.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="MT.OnlineRestaurant.Logging">
-      <HintPath>..\MT.OnlineRestaurant.Logging\bin\Debug\netcoreapp2.0\MT.OnlineRestaurant.Logging.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
