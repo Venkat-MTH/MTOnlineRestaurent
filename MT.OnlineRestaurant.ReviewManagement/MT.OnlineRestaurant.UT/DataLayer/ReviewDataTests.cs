@@ -18,7 +18,7 @@ namespace MT.OnlineRestaurant.UT.DataLayer
             TblRating reviewdetails = new TblRating()
             {
                 TblCustomerId = 1,
-                Rating = "5",
+                Rating = 5,
                 TblRestaurantId = 1,
                 Comments = "Good"
             };
@@ -38,7 +38,7 @@ namespace MT.OnlineRestaurant.UT.DataLayer
             TblRating reviewdetails = new TblRating()
             {
                 TblCustomerId = 1,
-                Rating = "5",
+                Rating = 5,
                 TblRestaurantId = 1,
                 Comments = "Good"
             };
@@ -53,7 +53,7 @@ namespace MT.OnlineRestaurant.UT.DataLayer
             TblRating updatedreviewdetails = new TblRating()
             {
                 TblCustomerId = 1,
-                Rating = "8",
+                Rating = 5,
                 TblRestaurantId = 1,
                 Comments = "Excellent"
             };
@@ -70,7 +70,7 @@ namespace MT.OnlineRestaurant.UT.DataLayer
             TblRating reviewdetails = new TblRating()
             {
                 TblCustomerId = 1,
-                Rating = "5",
+                Rating = 5,
                 TblRestaurantId = 1,
                 Comments = "Good"
             };
@@ -92,7 +92,7 @@ namespace MT.OnlineRestaurant.UT.DataLayer
             TblRating reviewdetails = new TblRating()
             {
                 TblCustomerId = 1,
-                Rating = "5",
+                Rating = 5,
                 TblRestaurantId = 1,
                 Comments = "Good"
             };

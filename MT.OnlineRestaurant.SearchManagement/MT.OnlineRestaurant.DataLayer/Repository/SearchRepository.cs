@@ -322,6 +322,7 @@ namespace MT.OnlineRestaurant.DataLayer.Repository
                 var restaurantFilter = (from restaurant in db.TblRestaurant
                                         join location in db.TblLocation on restaurant.TblLocationId equals location.Id
                                         join rating in db.TblRating on restaurant.Id equals rating.TblRestaurantId
+                                       /// where searchList.rating > Convert.ToInt32(rating.Rating)
                                         orderby rating.Rating descending
                                         select new { TblRestaurant = restaurant, TblLocation = location });
 
@@ -347,7 +348,9 @@ namespace MT.OnlineRestaurant.DataLayer.Repository
                 {
                     restaurantFilter = (from filteredRestaurant in restaurantFilter
                                         join rating in db.TblRating on filteredRestaurant.TblRestaurant.Id equals rating.TblRestaurantId
-                                        where rating.Rating.Contains(searchList.rating.ToString())
+                                        //where rating.Rating.Contains(searchList.rating.ToString())
+                                        where Convert.ToInt32(rating.Rating) >= searchList.rating
+                                        orderby rating.Rating descending
                                         select filteredRestaurant).Distinct();
                 }
 

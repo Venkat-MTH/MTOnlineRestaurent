@@ -135,7 +135,7 @@ namespace MT.OnlineRestaurant.DataLayer
 
         public IQueryable<TblCart> GetCartDetails(int CustomerID)
         {
-            return _context.TblCart.Where(ca => ca.TblCustomerID == CustomerID).AsQueryable();
+            return _context.TblCart.Where(ca => ca.TblCustomerID == CustomerID && ca.status==true).AsQueryable();
         }
 
         public int RemoveCart(int customerID, int? menuID)

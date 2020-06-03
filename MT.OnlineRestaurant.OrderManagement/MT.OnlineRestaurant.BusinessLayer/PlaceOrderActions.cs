@@ -109,9 +109,9 @@ namespace MT.OnlineRestaurant.BusinessLayer
 
         public async Task<bool> IsValidRestaurantAsync(OrderEntity orderEntity, int UserId, string UserToken)
         {
-            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl))
+            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl= "https://restaurentmanagement.azurewebsites.net/api/ResturantDetail?RestaurantID=" + orderEntity.RestaurantId))
             {
-                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync("api/ResturantDetail?RestaurantID=" + orderEntity.RestaurantId);
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(_connectionStrings.Value.RestaurantApiUrl);
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
                     string json = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -128,7 +128,7 @@ namespace MT.OnlineRestaurant.BusinessLayer
         {
             
             bool flag = true;
-            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl = "https://mtonlinerestaurantsearchmanagement.azurewebsites.net/api/OrderDetails?orderedmenuitems="))
+            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl = "https://restaurentmanagement.azurewebsites.net/api/OrderDetails?orderedmenuitems="))
             //using (HttpClient httpClient = new HttpClient())
             {
                 var ordermenudetails = JsonConvert.SerializeObject(orderEntity.OrderMenuDetails);
@@ -181,7 +181,7 @@ namespace MT.OnlineRestaurant.BusinessLayer
 
         public async Task<bool> IsValidOfferAsync(OrderEntity orderEntity, int UserId, string UserToken)
         {
-            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl= "https://mtonlinerestaurantsearchmanagement.azurewebsites.net/api/OfferForMenu?orderedmenuitems="))
+            using (HttpClient httpClient = WebAPIClient.GetClient(UserToken, UserId, _connectionStrings.Value.RestaurantApiUrl= "https://restaurentmanagement.azurewebsites.net/api/OfferForMenu?orderedmenuitems="))
             //using (HttpClient httpClient = new HttpClient())
             {
                 var val = JsonConvert.SerializeObject(orderEntity.OrderMenuDetails);

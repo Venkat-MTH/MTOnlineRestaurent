@@ -23,7 +23,7 @@ namespace MT.OnlineRestaurant.UT.BusinesssLayer
             RestaurantRating reviewdetails = new RestaurantRating()
             {
                 customerId = 1,
-                rating = "5",
+                rating = 5,
                 RestaurantId = 1,
                 user_Comments = "Good"
             };
@@ -54,7 +54,7 @@ namespace MT.OnlineRestaurant.UT.BusinesssLayer
             RestaurantRating reviewdetails = new RestaurantRating()
             {
                 customerId = 1,
-                rating = "5",
+                rating = 5,
                 RestaurantId = 1,
                 user_Comments = "Good"
             };
@@ -74,7 +74,7 @@ namespace MT.OnlineRestaurant.UT.BusinesssLayer
             {
                 TblRestaurantId = 1,
                 TblCustomerId = 1,
-                Rating = "2",
+                Rating = 5,
                 Comments = "Not Bad",
             });
 
@@ -107,7 +107,7 @@ namespace MT.OnlineRestaurant.UT.BusinesssLayer
             {
                 TblRestaurantId = 1,
                 TblCustomerId = 1,
-                Rating = "2",
+                Rating = 5,
                 Comments = "Not Bad",
             });
 

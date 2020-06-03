@@ -21,7 +21,7 @@ namespace MT.Online.Restaurant.MessagesManagement.Services
             _logService = logService;
             _cartBusiness = cartBusiness;
         }
-        const string ServiceBusConnectionString = "Endpoint=sb://capstonesbevents.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=gly3qiwi2KxnSexwKm7r1ctoBMCaJbFJKN7FSYwgALc=";
+        const string ServiceBusConnectionString = "Endpoint=sb://capstonesbevents.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=9b+LZ9j16XL3Q9fD0RvUfRmVQWZ7jxiCfDd1y91gkaw=";
         const string TopicName = "pricechange";
         const string SubscriptionName = "ps1";
         static ISubscriptionClient subscriptionClient;

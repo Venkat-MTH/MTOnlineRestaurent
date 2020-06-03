@@ -20,8 +20,8 @@ namespace MT.OnlineRestaurant.OrderAPI.ModelValidators
 
             RuleFor(m => m)
                 .NotEmpty()
-                .NotNull();
-                //.Must(r => BeAValidRestaurant(r, UserId, UserToken)).When(p => p.RestaurantId != 0).WithMessage("Invalid Restaurant");
+                .NotNull()
+                .Must(r => BeAValidRestaurant(r, UserId, UserToken)).When(p => p.RestaurantId != 0).WithMessage("Invalid Restaurant");
 
             RuleFor(m => m)
                 .NotEmpty()

@@ -7,7 +7,7 @@ namespace MT.OnlineRestaurant.DataLayer.EntityFrameWorkModel
     [ExcludeFromCodeCoverage]
     public partial class TblRating
     {
-        public string Rating { get; set; }
+        public int Rating { get; set; }
         public string Comments { get; set; }
         public int TblRestaurantId { get; set; }
         public int Id { get; set; }

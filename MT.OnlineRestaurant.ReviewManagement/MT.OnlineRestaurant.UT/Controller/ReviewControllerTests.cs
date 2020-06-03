@@ -24,7 +24,7 @@ namespace MT.OnlineRestaurant.UT.Controller
             {
                 RestaurantId = 1,
                 customerId = 1,
-                rating = "2",
+                rating = 2,
                 user_Comments = "Not Bad",
             });
             var mockReview = new Mock<IReviewBusiness>();
@@ -118,7 +118,7 @@ namespace MT.OnlineRestaurant.UT.Controller
             {
                 RestaurantId = 1,
                 customerId = 1,
-                rating = "5",
+                rating = 8,
                 user_Comments = "Good",
             });
             var mockOrder = new Mock<IReviewBusiness>();
@@ -148,7 +148,7 @@ namespace MT.OnlineRestaurant.UT.Controller
             {
                 RestaurantId = 1,
                 customerId = 1,
-                rating = "5",
+                rating = 5,
                 user_Comments = "Good",
             });
             var mockOrder = new Mock<IReviewBusiness>();
@@ -175,7 +175,7 @@ namespace MT.OnlineRestaurant.UT.Controller
             {
                 RestaurantId = 1,
                 customerId = 1,
-                rating = "8",
+                rating = 8,
                 user_Comments = "Excellent",
             };
             var mockOrder = new Mock<IReviewBusiness>();
@@ -226,7 +226,7 @@ namespace MT.OnlineRestaurant.UT.Controller
             {
                 RestaurantId = 1,
                 customerId = 1,
-                rating = "8",
+                rating = 8,
                 user_Comments = "Excellent",
             };
             var mockOrder = new Mock<IReviewBusiness>();

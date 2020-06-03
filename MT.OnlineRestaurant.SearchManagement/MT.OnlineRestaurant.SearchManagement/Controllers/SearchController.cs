@@ -265,12 +265,6 @@ namespace MT.OnlineRestaurant.SearchManagement.Controllers
                 return this.StatusCode((int)HttpStatusCode.InternalServerError, "Offer Expired");
             }
            
-            //int query_result = business_Repo.ItemInStock(restaurantID, menuID);
-            //if (query_result > 0)
-            //{
-            //    return Ok(restaurantID);
-            //}
-            //return this.StatusCode((int)HttpStatusCode.InternalServerError, "error");
         }
     }
 }
