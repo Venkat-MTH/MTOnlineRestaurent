@@ -15,7 +15,7 @@ namespace MT.Online.Restaurant.MessagesManagement.Services
 {
     public class ConsumeOutOfStock : IConsumeOutOfStock
     {
-        const string ServiceBusConnectionString = "Endpoint=sb://capstonesbevents.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=9b+LZ9j16XL3Q9fD0RvUfRmVQWZ7jxiCfDd1y91gkaw=";
+        const string ServiceBusConnectionString = "Endpoint=sb://capstonesbevents.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=KYDlMTGUX4tzIB4WEEAO/BgKRKPoZzl0LhXyMSghrkc=";
         const string TopicName = "itemoutofstock";
         const string SubscriptionName = "s1";
         static ISubscriptionClient subscriptionClient;
